@@ -25,7 +25,13 @@ const ModeSelect = () => {
       }}
       size="small"
     >
-      <InputLabel id="demo-select-small-label">
+      <InputLabel
+        id="demo-select-small-label"
+        sx={{
+          color: 'white',
+          '&.Mui-focused': { color: 'white' }
+        }}
+      >
         Mode
       </InputLabel>
       <Select
@@ -34,6 +40,24 @@ const ModeSelect = () => {
         value={mode}
         label="Mode"
         onChange={handleChange}
+        sx={{
+          color: 'white',
+          '&.Mui-focused': { color: 'white' },
+          '.MuiOutlinedInput-notchedOutline': {
+            borderColor: 'white',
+            borderWidth: '1px !important'
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'white'
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline':
+            {
+              borderColor: 'white'
+            },
+          svg: {
+            color: 'white'
+          }
+        }}
       >
         <MenuItem value="light">Light</MenuItem>
         <MenuItem value="dark">Dark</MenuItem>

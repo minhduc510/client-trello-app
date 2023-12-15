@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -23,7 +24,7 @@ const Recent = () => {
     setAnchorEl(null)
   }
   return (
-    <div>
+    <Box>
       <Button
         id="basic-button-recent"
         aria-controls={
@@ -35,6 +36,7 @@ const Recent = () => {
         endIcon={<ExpandMoreIcon />}
         sx={{
           width: { xs: '100%', md: 'auto' },
+          color: 'white',
           justifyContent: {
             xs: 'space-between',
             md: 'normal'
@@ -71,7 +73,7 @@ const Recent = () => {
           <ListItemText>Paste</ListItemText>
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   )
 }
 
