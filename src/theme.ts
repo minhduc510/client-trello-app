@@ -15,9 +15,16 @@ declare module '@mui/material/styles' {
   }
 }
 
+// Update the Typography's variant prop options
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    span: true
+  }
+}
+
 const theme = extendTheme({
   trello: {
-    appBarHeight: '48px',
+    appBarHeight: '58px',
     boardBarHeight: '58px'
   },
   colorSchemes: {
