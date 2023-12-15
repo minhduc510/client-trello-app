@@ -33,6 +33,13 @@ const Templates = () => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         endIcon={<ExpandMoreIcon />}
+        sx={{
+          width: { xs: '100%', md: 'auto' },
+          justifyContent: {
+            xs: 'space-between',
+            md: 'normal'
+          }
+        }}
       >
         Templates
       </Button>
