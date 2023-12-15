@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   IconButton,
+  InputAdornment,
   SvgIcon,
   SwipeableDrawer,
   TextField,
@@ -22,6 +23,8 @@ import Starred from './Menus/Starred'
 import Profiles from './Menus/Profiles'
 import Templates from './Menus/Templates'
 import Workspaces from './Menus/Workspaces'
+import SearchIcon from '@mui/icons-material/Search'
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 
 const AppBar = () => {
   const [menuMobile, setMenuMobile] = React.useState(false)
@@ -34,7 +37,11 @@ const AppBar = () => {
           height: (theme) => theme.trello.appBarHeight,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          bgcolor: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'black'
+              : '#1565c0'
         }}
       >
         <Box
@@ -63,13 +70,13 @@ const AppBar = () => {
           >
             <MenuIcon
               sx={{
-                color: 'primary.main'
+                color: 'white'
               }}
             />
           </IconButton>
           <AppsIcon
             sx={{
-              color: 'primary.main',
+              color: 'white',
               display: { xs: 'none', md: 'block' }
             }}
           />
@@ -83,14 +90,14 @@ const AppBar = () => {
             <SvgIcon
               component={TrelloIcon}
               inheritViewBox
-              sx={{ color: 'primary.main' }}
+              sx={{ color: 'white' }}
             />
             <Typography
               variant="span"
               sx={{
                 fontSize: '1.2rem',
                 fontWeight: 'bold',
-                color: 'primary.main'
+                color: 'white'
               }}
             >
               Trello
@@ -106,7 +113,19 @@ const AppBar = () => {
             <Recent />
             <Starred />
             <Templates />
-            <Button variant="outlined">Create</Button>
+            <Button
+              variant="outlined"
+              startIcon={<AddToPhotosIcon />}
+              sx={{
+                color: 'white',
+                borderColor: 'white',
+                '&:hover': {
+                  borderColor: '#bababf'
+                }
+              }}
+            >
+              Create
+            </Button>
           </Box>
         </Box>
         <Box
@@ -121,7 +140,29 @@ const AppBar = () => {
             label="Search"
             type="search"
             size="small"
-            sx={{ marginTop: '2px', minWidth: 120 }}
+            sx={{
+              marginTop: '2px',
+              minWidth: 120,
+              '& label': { color: 'white' },
+              '& label.Mui-focused': { color: 'white' },
+              '& input': { color: 'white' },
+              '& .MuiOutlinedInput-root': {
+                fieldset: { borderColor: 'white' },
+                '&:hover fieldset': {
+                  borderColor: 'white'
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white'
+                }
+              }
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ color: 'white' }} />
+                </InputAdornment>
+              )
+            }}
           />
           <Box
             sx={{
@@ -132,15 +173,19 @@ const AppBar = () => {
           </Box>
           <Tooltip title="Notification">
             <Badge
-              color="secondary"
+              color="error"
               variant="dot"
               sx={{ cursor: 'pointer' }}
             >
-              <NotificationsNoneIcon />
+              <NotificationsNoneIcon
+                sx={{ color: 'white' }}
+              />
             </Badge>
           </Tooltip>
           <Tooltip title="Help">
-            <HelpOutlineIcon sx={{ cursor: 'pointer' }} />
+            <HelpOutlineIcon
+              sx={{ cursor: 'pointer', color: 'white' }}
+            />
           </Tooltip>
           <Profiles />
         </Box>

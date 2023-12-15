@@ -35,6 +35,7 @@ const Templates = () => {
         endIcon={<ExpandMoreIcon />}
         sx={{
           width: { xs: '100%', md: 'auto' },
+          color: 'white',
           justifyContent: {
             xs: 'space-between',
             md: 'normal'

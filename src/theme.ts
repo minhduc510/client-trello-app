@@ -29,22 +29,12 @@ const theme = extendTheme({
   },
   colorSchemes: {
     light: {
-      palette: {
-        primary: {
-          main: '#1976d2',
-          light: '#42a5f5',
-          dark: '#1565c0',
-          contrastText: '#fff'
-        }
-      }
+      palette: {}
     },
     dark: {
       palette: {
         primary: {
-          main: '#5C8374',
-          light: '#93B1A6',
-          dark: '#183D3D',
-          contrastText: '#fff'
+          main: '#333232'
         }
       }
     }
@@ -59,25 +49,22 @@ const theme = extendTheme({
     },
     MuiFormLabel: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.primary.main,
+        root: {
           fontSize: '0.875rem'
-        })
+        }
       }
     },
     MuiOutlinedInput: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.primary.main,
+        root: {
           fontSize: '0.875rem',
-          '.MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.light,
-            borderWidth: '1px !important'
+          '&:hover fieldset': {
+            borderWidth: '2px !important'
           },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.main
+          '&.Mui-focused fieldset': {
+            borderWidth: '2px !important'
           }
-        })
+        }
       }
     }
   }
