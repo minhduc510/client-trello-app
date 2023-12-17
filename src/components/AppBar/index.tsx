@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 import AppsIcon from '@mui/icons-material/Apps'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
@@ -25,9 +25,12 @@ import Templates from './Menus/Templates'
 import Workspaces from './Menus/Workspaces'
 import SearchIcon from '@mui/icons-material/Search'
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
+import ClearIcon from '@mui/icons-material/Clear'
 
 const AppBar = () => {
-  const [menuMobile, setMenuMobile] = React.useState(false)
+  const [menuMobile, setMenuMobile] =
+    useState<boolean>(false)
+  const [valueSearch, setValueSeach] = useState<string>('')
   return (
     <>
       <Box
@@ -138,8 +141,10 @@ const AppBar = () => {
           <TextField
             id="outlined-search"
             label="Search"
-            type="search"
+            type="text"
             size="small"
+            value={valueSearch}
+            onChange={(e) => setValueSeach(e.target.value)}
             sx={{
               marginTop: '2px',
               minWidth: 120,
@@ -160,6 +165,20 @@ const AppBar = () => {
               startAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon sx={{ color: 'white' }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                  onClick={() => setValueSeach('')}
+                >
+                  <ClearIcon
+                    sx={{
+                      color: 'white',
+                      cursor: 'pointer',
+                      opacity: valueSearch ? 1 : 0
+                    }}
+                  />
                 </InputAdornment>
               )
             }}
