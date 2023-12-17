@@ -5,12 +5,14 @@ declare module '@mui/material/styles' {
     trello: {
       appBarHeight: React.CSSProperties['height']
       boardBarHeight: React.CSSProperties['height']
+      boardContentHeight: React.CSSProperties['height']
     }
   }
   interface ThemeOptions {
     trello?: {
       appBarHeight?: React.CSSProperties['height']
       boardBarHeight?: React.CSSProperties['height']
+      boardContentHeight?: React.CSSProperties['height']
     }
   }
 }
@@ -22,10 +24,15 @@ declare module '@mui/material/Typography' {
   }
 }
 
+const APP_BAR_HEIGHT = '58px'
+const BOARD_BAR_HEIGHT = '58px'
+const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT})`
+
 const theme = extendTheme({
   trello: {
-    appBarHeight: '58px',
-    boardBarHeight: '58px'
+    appBarHeight: APP_BAR_HEIGHT,
+    boardBarHeight: BOARD_BAR_HEIGHT,
+    boardContentHeight: BOARD_CONTENT_HEIGHT
   },
   colorSchemes: {
     light: {
@@ -41,16 +48,42 @@ const theme = extendTheme({
   },
   components: {
     MuiCssBaseline: {
-      styleOverrides: `
-        h1, h2, h3, h4, h5, h6, p {
-          margin: 0;
+      styleOverrides: {
+        body: {
+          'h1, h2, h3, h4, h5, h6, p': {
+            margin: 0
+          },
+          '*::-webkit-scrollbar': {
+            width: '7px',
+            height: '7px'
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#ced0da',
+            borderRadius: '5px'
+          },
+          '*::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#bfc2cf'
+          },
+          '*::-webkit-scrollbar-track': {
+            backgroundColor: '#f1f1f1',
+            borderRadius: '5px'
+          }
         }
-      `
+      }
     },
     MuiFormLabel: {
       styleOverrides: {
         root: {
           fontSize: '0.875rem'
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          '&.MuiTypography-body1': {
+            fontSize: '0.875rem'
+          }
         }
       }
     },

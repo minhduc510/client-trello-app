@@ -38,6 +38,10 @@ const BoardBar = () => {
           justifyContent: 'space-between',
           height: (theme) => theme.trello.boardBarHeight,
           overflowX: 'auto',
+          overflowY: 'hidden',
+          '&::-webkit-scrollbar-track': {
+            m: '0 15px'
+          },
           paddingX: 2,
           borderTop: (theme) =>
             `1px solid ${
