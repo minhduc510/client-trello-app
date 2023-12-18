@@ -17,8 +17,14 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 
 import ListCards from './ListCards/ListCards'
+import { ColumnProps } from '@/interface'
+import { mapOrder } from '@/utils/sorts'
 
-const Column = () => {
+interface IProps {
+  column: ColumnProps
+}
+
+const Column = ({ column }: IProps) => {
   const [anchorEl, setAnchorEl] = React.useState<
     null | HTMLElement | (EventTarget & SVGSVGElement)
   >(null)
@@ -31,6 +37,12 @@ const Column = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const orderedColumns = mapOrder(
+    column?.cards,
+    column?.cardOrderIds,
+    '_id'
+  )
   return (
     <>
       <Box
@@ -60,8 +72,11 @@ const Column = () => {
             justifyContent: 'space-between'
           }}
         >
-          <Typography sx={{ fontWeight: 'bold' }}>
-            Header Content
+          <Typography
+            variant="h7"
+            sx={{ fontWeight: 'bold' }}
+          >
+            {column.title}
           </Typography>
           <div>
             <Tooltip title="More options">
@@ -135,7 +150,7 @@ const Column = () => {
           </div>
         </Box>
 
-        <ListCards />
+        <ListCards cards={orderedColumns} />
 
         <Box
           sx={{
