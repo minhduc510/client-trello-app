@@ -19,12 +19,28 @@ import ListItemText from '@mui/material/ListItemText'
 import ListCards from './ListCards/ListCards'
 import { ColumnProps } from '@/interface'
 import { mapOrder } from '@/utils/sorts'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 interface IProps {
   column: ColumnProps
 }
 
 const Column = ({ column }: IProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition
+  } = useSortable({ id: column._id, data: { ...column } })
+
+  const dndKitColumnStyles = {
+    touchAction: 'none',
+    transform: CSS.Translate.toString(transform),
+    transition
+  }
+
   const [anchorEl, setAnchorEl] = React.useState<
     null | HTMLElement | (EventTarget & SVGSVGElement)
   >(null)
@@ -46,6 +62,10 @@ const Column = ({ column }: IProps) => {
   return (
     <>
       <Box
+        ref={setNodeRef}
+        style={dndKitColumnStyles}
+        {...attributes}
+        {...listeners}
         sx={{
           minWidth: '300px',
           maxWidth: '300px',

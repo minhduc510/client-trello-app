@@ -2,52 +2,62 @@ import { Box, Button } from '@mui/material'
 import Column from './Column/Column'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import { ColumnProps } from '@/interface'
+import {
+  SortableContext,
+  horizontalListSortingStrategy
+} from '@dnd-kit/sortable'
 
 interface IProps {
   columns: ColumnProps[]
 }
 
 const ListColumns = ({ columns }: IProps) => {
+  const listIdColumns = columns.map((column) => column._id)
   return (
-    <Box
-      sx={{
-        width: '100%',
-        height: '100%',
-        bgcolor: 'inherit',
-        display: 'flex',
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        '&::-webkit-scrollbar-track': {
-          m: '0 10px'
-        }
-      }}
+    <SortableContext
+      items={listIdColumns}
+      strategy={horizontalListSortingStrategy}
     >
-      {columns?.map((column) => (
-        <Column key={column._id} column={column} />
-      ))}
-
       <Box
         sx={{
-          minWidth: '200px',
-          maxWidth: '200px',
-          mx: 2,
-          borderRadius: '6px',
-          height: 'fit-content',
-          bgcolor: '#ffffff3d'
+          width: '100%',
+          height: '100%',
+          bgcolor: 'inherit',
+          display: 'flex',
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          '&::-webkit-scrollbar-track': {
+            m: '0 10px'
+          }
         }}
       >
-        <Button
-          startIcon={<AddBoxIcon />}
+        {columns?.map((column) => (
+          <Column key={column._id} column={column} />
+        ))}
+
+        <Box
           sx={{
-            color: 'white',
-            paddingTop: 1,
-            width: '100%'
+            minWidth: '200px',
+            maxWidth: '200px',
+            mx: 2,
+            borderRadius: '6px',
+            height: 'fit-content',
+            bgcolor: '#ffffff3d'
           }}
         >
-          App new column
-        </Button>
+          <Button
+            startIcon={<AddBoxIcon />}
+            sx={{
+              color: 'white',
+              paddingTop: 1,
+              width: '100%'
+            }}
+          >
+            App new column
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </SortableContext>
   )
 }
 
