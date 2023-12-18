@@ -1,7 +1,12 @@
 import { Box } from '@mui/material'
 import Card from './Card/Card'
+import { CardProps } from '@/interface'
 
-const ListCards = () => {
+interface IProps {
+  cards: CardProps[]
+}
+
+const ListCards = ({ cards }: IProps) => {
   return (
     <>
       <Box
@@ -21,7 +26,9 @@ const ListCards = () => {
             } - ${theme.trello.columnFooterHeight})`
         }}
       >
-        <Card />
+        {cards.map((card) => (
+          <Card key={card._id} card={card} />
+        ))}
       </Box>
     </>
   )

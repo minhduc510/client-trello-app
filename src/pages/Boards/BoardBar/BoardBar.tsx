@@ -12,6 +12,12 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
+import { BoardProps } from '@/interface'
+import { capitalizeFirstLetter } from '@/utils/formatters'
+
+interface IProps {
+  board: BoardProps
+}
 
 const MENU_STYLE = {
   color: 'white',
@@ -27,7 +33,7 @@ const MENU_STYLE = {
   }
 }
 
-const BoardBar = () => {
+const BoardBar = ({ board }: IProps) => {
   return (
     <>
       <Box
@@ -64,13 +70,13 @@ const BoardBar = () => {
         >
           <Chip
             icon={<DashboardIcon />}
-            label="MinhDuc app"
+            label={board?.title}
             clickable
             sx={MENU_STYLE}
           />
           <Chip
             icon={<VpnLockIcon />}
-            label="Public/Private Workspace"
+            label={capitalizeFirstLetter(board?.type)}
             clickable
             sx={MENU_STYLE}
           />

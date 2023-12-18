@@ -1,8 +1,13 @@
 import { Box, Button } from '@mui/material'
 import Column from './Column/Column'
 import AddBoxIcon from '@mui/icons-material/AddBox'
+import { ColumnProps } from '@/interface'
 
-const ListColumns = () => {
+interface IProps {
+  columns: ColumnProps[]
+}
+
+const ListColumns = ({ columns }: IProps) => {
   return (
     <Box
       sx={{
@@ -17,9 +22,9 @@ const ListColumns = () => {
         }
       }}
     >
-      <Column />
-      <Column />
-      <Column />
+      {columns?.map((column) => (
+        <Column key={column._id} column={column} />
+      ))}
 
       <Box
         sx={{

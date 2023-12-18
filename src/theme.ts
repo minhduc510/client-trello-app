@@ -25,6 +25,7 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     span: true
+    h7: true
   }
 }
 
