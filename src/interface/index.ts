@@ -1,13 +1,14 @@
 export interface CardProps {
   _id: string
   boardId: string
-  columnId: string
-  title: string
-  description: string | null
-  cover: string | null
-  memberIds: string[] | never[]
-  comments: string[] | never[]
-  attachments: string[] | never[]
+  columnId?: string
+  title?: string
+  description?: string | null
+  cover?: string | null
+  memberIds?: string[] | never[]
+  comments?: string[] | never[]
+  attachments?: string[] | never[]
+  FE_PlaceholderCard?: boolean
 }
 
 export interface ColumnProps {
