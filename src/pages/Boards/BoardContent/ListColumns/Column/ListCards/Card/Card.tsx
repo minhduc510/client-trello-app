@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button'
 
+import { CardProps } from '@/interface'
 import AttachmentIcon from '@mui/icons-material/Attachment'
 import ModeCommentIcon from '@mui/icons-material/ModeComment'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
@@ -7,13 +8,32 @@ import { Card as MuiCard, Typography } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
-import { CardProps } from '@/interface'
+
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 interface IProps {
   card: CardProps
 }
 
 const Card = ({ card }: IProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: card._id, data: { ...card } })
+
+  const dndKitCardStyles = {
+    touchAction: 'none',
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? '0.5' : undefined,
+    border: isDragging ? '1px solid #2ecc71' : undefined
+  }
+
   const shouldShowCardAction =
     !!card?.memberIds?.length ||
     !!card?.comments?.length ||
@@ -21,6 +41,10 @@ const Card = ({ card }: IProps) => {
 
   return (
     <MuiCard
+      ref={setNodeRef}
+      style={dndKitCardStyles}
+      {...attributes}
+      {...listeners}
       sx={{
         cursor: 'pointer',
         overflow: 'unset',
