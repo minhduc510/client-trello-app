@@ -14,6 +14,8 @@ import {
   Settings
 } from '@mui/icons-material'
 
+import AvatarImage from '@/images/avatar.jpg'
+
 const Profiles = () => {
   const [anchorEl, setAnchorEl] =
     React.useState<null | HTMLElement>(null)
@@ -37,10 +39,7 @@ const Profiles = () => {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar
-            alt="Minh Đức"
-            src="https://lh3.googleusercontent.com/a/ACg8ocLkMvp62AvlTwtwlx3OfRUiI9k4dszJr_SwQ1TBSmx3ZA=s288-c-no"
-          />
+          <Avatar alt="Trần Minh Đức" src={AvatarImage} />
         </IconButton>
       </Tooltip>
       <Menu

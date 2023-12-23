@@ -1,16 +1,19 @@
-import Button from '@mui/material/Button'
-
-import { CardProps } from '@/interface'
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
 import AttachmentIcon from '@mui/icons-material/Attachment'
 import ModeCommentIcon from '@mui/icons-material/ModeComment'
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
-import { Card as MuiCard, Typography } from '@mui/material'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
+import {
+  Button,
+  CardMedia,
+  Typography,
+  CardActions,
+  CardContent,
+  Card as MuiCard
+} from '@mui/material'
 
-import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useSortable } from '@dnd-kit/sortable'
+
+import { CardProps } from '@/interface'
 
 interface IProps {
   card: CardProps
@@ -50,7 +53,11 @@ const Card = ({ card }: IProps) => {
         overflow: 'unset',
         boxShadow:
           'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
-        display: card.FE_PlaceholderCard ? 'none' : 'block'
+        display: card.FE_PlaceholderCard ? 'none' : 'block',
+        border: '1px solid transparent',
+        '&:hover': {
+          borderColor: (theme) => theme.palette.primary.main
+        }
       }}
     >
       {card?.cover && (

@@ -1,34 +1,8 @@
 import { Box } from '@mui/material'
-
-import ListColumns from './ListColumns/ListColumns'
-import {
-  BoardProps,
-  CardProps,
-  ColumnProps
-} from '@/interface'
-import { mapOrder } from '@/utils/sorts'
-import {
-  DndContext,
-  DragEndEvent,
-  PointerSensor,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-  DragStartEvent,
-  DragOverlay,
-  defaultDropAnimationSideEffects,
-  DragOverEvent,
-  closestCorners,
-  Active,
-  Over,
-  Collision,
-  pointerWithin,
-  rectIntersection,
-  getFirstCollision,
-  closestCenter
-} from '@dnd-kit/core'
+import { arrayMove } from '@dnd-kit/sortable'
 import { cloneDeep, isEmpty } from 'lodash'
+import { generatePlaceholderCard } from '@/utils/formatters'
+import { CollisionArgs } from '@dnd-kit/core/dist/utilities/algorithms/types'
 import {
   useCallback,
   useEffect,
@@ -36,16 +10,54 @@ import {
   useState
 } from 'react'
 import {
-  arrayMove,
-  rectSortingStrategy
-} from '@dnd-kit/sortable'
+  Over,
+  Active,
+  Collision,
+  useSensor,
+  DndContext,
+  useSensors,
+  DragOverlay,
+  DragEndEvent,
+  DragOverEvent,
+  pointerWithin,
+  DragStartEvent,
+  closestCorners,
+  getFirstCollision,
+  defaultDropAnimationSideEffects
+} from '@dnd-kit/core'
+
+import {
+  MouseSensor,
+  TouchSensor
+} from '@/customLibrary/DndKit'
+import {
+  BoardProps,
+  CardBodyProps,
+  CardProps,
+  ColumnBodyProps,
+  ColumnProps
+} from '@/interface'
 import Column from './ListColumns/Column/Column'
+import ListColumns from './ListColumns/ListColumns'
 import Card from './ListColumns/Column/ListCards/Card/Card'
-import { CollisionArgs } from '@dnd-kit/core/dist/utilities/algorithms/types'
-import { generatePlaceholderCard } from '@/utils/formatters'
 
 interface IProps {
-  board: BoardProps
+  board: BoardProps | null
+  createNewColumn: (data: ColumnBodyProps) => void
+  createNewCard: (data: CardBodyProps) => void
+  moveColumns: (data: ColumnProps[]) => void
+  moveCardInTheSameColumn: (
+    dndOrderedCards: CardProps[],
+    dndOrderedCardIds: string[],
+    id: string
+  ) => void
+  moveCardToDifferentColumn: (
+    curentCardId: string | number,
+    prevColumnId: string,
+    nextColumnId: string,
+    dndOrderedColumns: ColumnProps[]
+  ) => void
+  deleteColumnDetails: (columnId: string) => void
 }
 
 const ACTIVE_DRAG_ITEM_TYPE = {
@@ -57,7 +69,15 @@ type ActiveDragItemType =
   | 'ACTIVE_DRAG_ITEM_TYPE_COLUMN'
   | 'ACTIVE_DRAG_ITEM_TYPE_CARD'
 
-const BoardContent = ({ board }: IProps) => {
+const BoardContent = ({
+  board,
+  createNewColumn,
+  createNewCard,
+  moveColumns,
+  moveCardInTheSameColumn,
+  moveCardToDifferentColumn,
+  deleteColumnDetails
+}: IProps) => {
   const [orderedColumns, setOrderedColumns] = useState<
     ColumnProps[]
   >([])
@@ -98,9 +118,7 @@ const BoardContent = ({ board }: IProps) => {
   const sensors = useSensors(mouseSensor, touchSensor)
 
   useEffect(() => {
-    setOrderedColumns(
-      mapOrder(board?.columns, board?.columnOrderIds, '_id')
-    )
+    setOrderedColumns(board?.columns as ColumnProps[])
   }, [board])
 
   const dropAnimation = {
@@ -175,7 +193,8 @@ const BoardContent = ({ board }: IProps) => {
     over: Over,
     activeColumn: ColumnProps,
     activeDraggingCardId: string | number,
-    activeDraggingCardData: any
+    activeDraggingCardData: any,
+    triggerFrom: 'handleDragOver' | 'handleDragEnd'
   ) => {
     setOrderedColumns((prevColumns) => {
       const overCardIndex = overColumn?.cards?.findIndex(
@@ -235,6 +254,18 @@ const BoardContent = ({ board }: IProps) => {
         nextOverColumn.cardOrderIds =
           nextOverColumn.cards.map((card) => card._id)
       }
+      if (
+        triggerFrom === 'handleDragEnd' &&
+        oldColumnWhenDraggingCard &&
+        nextActiveColumn
+      ) {
+        moveCardToDifferentColumn(
+          activeDraggingCardId,
+          oldColumnWhenDraggingCard._id,
+          nextActiveColumn._id,
+          nextColumns
+        )
+      }
       return nextColumns
     })
   }
@@ -284,7 +315,8 @@ const BoardContent = ({ board }: IProps) => {
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData
+        activeDraggingCardData,
+        'handleDragOver'
       )
     }
   }
@@ -319,7 +351,8 @@ const BoardContent = ({ board }: IProps) => {
           over,
           activeColumn,
           activeDraggingCardId,
-          activeDraggingCardData
+          activeDraggingCardData,
+          'handleDragEnd'
         )
       } else {
         const oldCardIndex =
@@ -334,6 +367,9 @@ const BoardContent = ({ board }: IProps) => {
           oldCardIndex,
           newCardIndex
         )
+        const dndOrderedCardIds = dndOrderedCards.map(
+          (card) => card._id
+        )
         setOrderedColumns((prevColumns) => {
           const nextColumns = cloneDeep(prevColumns)
 
@@ -342,11 +378,14 @@ const BoardContent = ({ board }: IProps) => {
           ) as ColumnProps
 
           targetColumn.cards = dndOrderedCards
-          targetColumn.cardOrderIds = dndOrderedCards.map(
-            (card) => card._id
-          )
+          targetColumn.cardOrderIds = dndOrderedCardIds
           return nextColumns
         })
+        moveCardInTheSameColumn(
+          dndOrderedCards,
+          dndOrderedCardIds,
+          oldColumnWhenDraggingCard._id
+        )
       }
     }
 
@@ -365,10 +404,9 @@ const BoardContent = ({ board }: IProps) => {
           oldColumnIndex,
           newColumnIndex
         )
-        // const dndOrderedColumnsIds = dndOrderedColumns.map(
-        //   (c) => c._id
-        // )
+
         setOrderedColumns(dndOrderedColumns)
+        moveColumns(dndOrderedColumns)
       }
     }
 
@@ -383,7 +421,6 @@ const BoardContent = ({ board }: IProps) => {
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
-        // collisionDetection={closestCorners}
         collisionDetection={collisionDetectionStratery}
         sensors={sensors}
       >
@@ -400,7 +437,12 @@ const BoardContent = ({ board }: IProps) => {
             display: 'flex'
           }}
         >
-          <ListColumns columns={orderedColumns} />
+          <ListColumns
+            columns={orderedColumns}
+            createNewColumn={createNewColumn}
+            createNewCard={createNewCard}
+            deleteColumnDetails={deleteColumnDetails}
+          />
           <DragOverlay dropAnimation={dropAnimation}>
             {!activeDragItemType && null}
             {activeDragItemType ===

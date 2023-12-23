@@ -1,31 +1,31 @@
 import { useState } from 'react'
-import MenuIcon from '@mui/icons-material/Menu'
-import AppsIcon from '@mui/icons-material/Apps'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import {
-  Badge,
   Box,
+  Badge,
   Button,
-  IconButton,
-  InputAdornment,
   SvgIcon,
-  SwipeableDrawer,
-  TextField,
   Tooltip,
-  Typography
+  TextField,
+  IconButton,
+  Typography,
+  InputAdornment,
+  SwipeableDrawer
 } from '@mui/material'
-
-import TrelloIcon from '@/assets/trello.svg?react'
-import ModeSelect from '../ModeSelect/ModeSelect'
 import Recent from './Menus/Recent'
 import Starred from './Menus/Starred'
 import Profiles from './Menus/Profiles'
 import Templates from './Menus/Templates'
 import Workspaces from './Menus/Workspaces'
+import MenuIcon from '@mui/icons-material/Menu'
+import AppsIcon from '@mui/icons-material/Apps'
+import ModeSelect from '../ModeSelect/ModeSelect'
+import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
-import ClearIcon from '@mui/icons-material/Clear'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
+
+import TrelloIcon from '@/assets/trello.svg?react'
 
 const AppBar = () => {
   const [menuMobile, setMenuMobile] =

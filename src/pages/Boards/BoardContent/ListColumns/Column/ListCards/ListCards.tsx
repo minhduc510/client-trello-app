@@ -1,21 +1,24 @@
 import { Box } from '@mui/material'
-import Card from './Card/Card'
-import { CardProps } from '@/interface'
 import {
   SortableContext,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable'
+
+import Card from './Card/Card'
+import { CardProps } from '@/interface'
 
 interface IProps {
   cards: CardProps[]
 }
 
 const ListCards = ({ cards }: IProps) => {
-  const listIdCards = cards.map((card) => card._id)
+  if (!Array.isArray(cards)) {
+    cards = [cards]
+  }
   return (
     <>
       <SortableContext
-        items={listIdCards}
+        items={cards.map((card) => card._id)}
         strategy={verticalListSortingStrategy}
       >
         <Box
@@ -23,7 +26,7 @@ const ListCards = ({ cards }: IProps) => {
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
-            p: '0 5px',
+            p: '0 5px 5px 5px',
             m: '0 5px',
             overflowX: 'hidden',
             overflowY: 'auto',
@@ -35,7 +38,7 @@ const ListCards = ({ cards }: IProps) => {
               } - ${theme.trello.columnFooterHeight})`
           }}
         >
-          {cards.map((card) => (
+          {cards?.map((card) => (
             <Card key={card._id} card={card} />
           ))}
         </Box>
