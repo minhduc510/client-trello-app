@@ -29,3 +29,12 @@ export interface BoardProps {
   columnOrderIds: string[]
   columns: ColumnProps[]
 }
+
+export interface ColumnBodyProps {
+  title: string
+  boardId: string
+}
+
+export interface CardBodyProps extends ColumnBodyProps {
+  columnId: string
+}

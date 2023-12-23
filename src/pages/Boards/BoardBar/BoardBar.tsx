@@ -1,22 +1,24 @@
 import {
-  Avatar,
-  AvatarGroup,
   Box,
-  Button,
   Chip,
-  Tooltip
+  Avatar,
+  Button,
+  Tooltip,
+  AvatarGroup
 } from '@mui/material'
-import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import VpnLockIcon from '@mui/icons-material/VpnLock'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
+
 import { BoardProps } from '@/interface'
+import { FAKE_DATA_USER } from '@/utils/constants'
 import { capitalizeFirstLetter } from '@/utils/formatters'
 
 interface IProps {
-  board: BoardProps
+  board: BoardProps | null
 }
 
 const MENU_STYLE = {
@@ -68,15 +70,17 @@ const BoardBar = ({ board }: IProps) => {
             gap: 2
           }}
         >
-          <Chip
-            icon={<DashboardIcon />}
-            label={board?.title}
-            clickable
-            sx={MENU_STYLE}
-          />
+          <Tooltip title={board?.description}>
+            <Chip
+              icon={<DashboardIcon />}
+              label={board?.title}
+              clickable
+              sx={MENU_STYLE}
+            />
+          </Tooltip>
           <Chip
             icon={<VpnLockIcon />}
-            label={capitalizeFirstLetter(board?.type)}
+            label={capitalizeFirstLetter(board?.type ?? '')}
             clickable
             sx={MENU_STYLE}
           />
@@ -122,37 +126,15 @@ const BoardBar = ({ board }: IProps) => {
           >
             Invite
           </Button>
-          <AvatarGroup max={4}>
-            <Tooltip title="Minh Đức">
-              <Avatar
-                alt="Remy Sharp"
-                src="https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt92e78c219124afdc/6433d049311bf7a3417725d5/GOAL_-_Blank_WEB_-_Facebook_-_2023-04-10T100035.769.png?auto=webp&format=pjpg&width=3840&quality=60"
-              />
-            </Tooltip>
-            <Tooltip title="Minh Đức">
-              <Avatar
-                alt="Remy Sharp"
-                src="https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt92e78c219124afdc/6433d049311bf7a3417725d5/GOAL_-_Blank_WEB_-_Facebook_-_2023-04-10T100035.769.png?auto=webp&format=pjpg&width=3840&quality=60"
-              />
-            </Tooltip>
-            <Tooltip title="Minh Đức">
-              <Avatar
-                alt="Remy Sharp"
-                src="https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt92e78c219124afdc/6433d049311bf7a3417725d5/GOAL_-_Blank_WEB_-_Facebook_-_2023-04-10T100035.769.png?auto=webp&format=pjpg&width=3840&quality=60"
-              />
-            </Tooltip>
-            <Tooltip title="Minh Đức">
-              <Avatar
-                alt="Remy Sharp"
-                src="https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt92e78c219124afdc/6433d049311bf7a3417725d5/GOAL_-_Blank_WEB_-_Facebook_-_2023-04-10T100035.769.png?auto=webp&format=pjpg&width=3840&quality=60"
-              />
-            </Tooltip>
-            <Tooltip title="Minh Đức">
-              <Avatar
-                alt="Remy Sharp"
-                src="https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt92e78c219124afdc/6433d049311bf7a3417725d5/GOAL_-_Blank_WEB_-_Facebook_-_2023-04-10T100035.769.png?auto=webp&format=pjpg&width=3840&quality=60"
-              />
-            </Tooltip>
+          <AvatarGroup max={6} sx={{ gap: 1.5 }}>
+            {FAKE_DATA_USER.map((user, index) => (
+              <Tooltip title={user.username} key={index}>
+                <Avatar
+                  alt={user.username}
+                  src={user.avatar}
+                />
+              </Tooltip>
+            ))}
           </AvatarGroup>
         </Box>
       </Box>

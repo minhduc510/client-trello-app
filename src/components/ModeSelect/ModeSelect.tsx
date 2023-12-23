@@ -1,10 +1,11 @@
-import { useColorScheme } from '@mui/material'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select, {
-  SelectChangeEvent
-} from '@mui/material/Select'
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  useColorScheme
+} from '@mui/material'
+import { SelectChangeEvent } from '@mui/material/Select'
 
 type Mode = 'dark' | 'light' | 'system'
 
