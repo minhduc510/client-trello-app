@@ -1,5 +1,5 @@
 let apiRoot = ''
-if (import.meta.env.MODE === 'dev') {
+if (import.meta.env.MODE === 'development') {
   apiRoot = 'http://localhost:8017'
 } else {
   apiRoot = 'https://trello-api-ecnn.onrender.com'
