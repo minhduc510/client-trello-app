@@ -1,4 +1,11 @@
-export const API_ROOT = 'http://localhost:8017'
+let apiRoot = ''
+if (import.meta.env.MODE === 'dev') {
+  apiRoot = 'http://localhost:8017'
+} else {
+  apiRoot = 'https://trello-api-ecnn.onrender.com'
+}
+
+export const API_ROOT = apiRoot
 
 export const BOARD_ID = '65846f194b167e85db1f6b25'
 
