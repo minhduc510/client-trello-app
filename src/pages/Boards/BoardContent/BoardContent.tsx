@@ -2,7 +2,6 @@ import { Box } from '@mui/material'
 import { arrayMove } from '@dnd-kit/sortable'
 import { cloneDeep, isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '@/utils/formatters'
-import { CollisionArgs } from '@dnd-kit/core/dist/utilities/algorithms/types'
 import {
   useCallback,
   useEffect,
@@ -33,10 +32,11 @@ import {
 } from '@/customLibrary/DndKit'
 import {
   BoardProps,
-  CardBodyProps,
   CardProps,
-  ColumnBodyProps,
-  ColumnProps
+  ColumnProps,
+  CardBodyProps,
+  CollisionArgs,
+  ColumnBodyProps
 } from '@/interface'
 import Column from './ListColumns/Column/Column'
 import ListColumns from './ListColumns/ListColumns'

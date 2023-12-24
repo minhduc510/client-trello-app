@@ -1,3 +1,11 @@
+import { Active } from '@dnd-kit/core'
+import { ClientRect } from '@dnd-kit/core'
+import { Coordinates } from '@dnd-kit/utilities'
+import {
+  DroppableContainer,
+  RectMap
+} from '@dnd-kit/core/dist/store'
+
 export interface CardProps {
   _id: string
   boardId: string
@@ -37,4 +45,12 @@ export interface ColumnBodyProps {
 
 export interface CardBodyProps extends ColumnBodyProps {
   columnId: string
+}
+
+export type CollisionArgs = {
+  active: Active
+  collisionRect: ClientRect
+  droppableRects: RectMap
+  droppableContainers: DroppableContainer[]
+  pointerCoordinates: Coordinates | null
 }
