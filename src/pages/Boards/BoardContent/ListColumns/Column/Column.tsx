@@ -28,7 +28,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 import ListCards from './ListCards/ListCards'
 import { CardBodyProps, ColumnProps } from '@/interface'
-import theme from '@/theme'
 
 interface IProps {
   column: ColumnProps

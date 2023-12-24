@@ -23,6 +23,7 @@ import {
   DragStartEvent,
   closestCorners,
   getFirstCollision,
+  DroppableContainer,
   defaultDropAnimationSideEffects
 } from '@dnd-kit/core'
 
@@ -159,7 +160,7 @@ const BoardContent = ({
             ...args,
             droppableContainers:
               args.droppableContainers.filter(
-                (container) => {
+                (container: DroppableContainer) => {
                   return (
                     container.id !== overId &&
                     checkColumn?.cardOrderIds?.includes(
