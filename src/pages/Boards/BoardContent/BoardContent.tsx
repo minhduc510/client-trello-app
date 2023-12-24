@@ -182,9 +182,15 @@ const BoardContent = ({
   )
 
   const findColumnByCardId = (cardId: string) => {
-    return orderedColumns.find((column) =>
-      column.cards.map((card) => card._id)?.includes(cardId)
-    )
+    return orderedColumns.find((column) => {
+      let listCards = column.cards
+      if (!Array.isArray(listCards)) {
+        listCards = [listCards]
+      }
+      return listCards
+        .map((card) => card._id)
+        ?.includes(cardId)
+    })
   }
 
   const moveCardBetweenDifferentColumns = (
@@ -220,10 +226,13 @@ const BoardContent = ({
         (column) => column._id === overColumn._id
       )
       if (nextActiveColumn) {
-        nextActiveColumn.cards =
-          nextActiveColumn.cards.filter(
-            (card) => card._id !== activeDraggingCardId
-          )
+        let listCards = nextActiveColumn.cards
+        if (!Array.isArray(listCards)) {
+          listCards = [listCards]
+        }
+        nextActiveColumn.cards = listCards.filter(
+          (card) => card._id !== activeDraggingCardId
+        )
         if (isEmpty(nextActiveColumn.cards)) {
           nextActiveColumn.cards = [
             generatePlaceholderCard(nextActiveColumn)
